@@ -2,7 +2,7 @@ package funcion;
 
 public enum Tokens {
 	entero("entero"),
-	identificado("identificador"),
+	identificador("identificador"),
 	decimal ("Decimal"),
 	simbolo ("Simbolo");
 	

@@ -25,7 +25,7 @@ public class App {
 		
 //		Tokens imp = Tokens.entero;
 //		System.out.println(imp.getTipo());
-		prueba.paso1("hola como[] estas");
+		prueba.paso1("hola como [] estas");
 		
 	}
 	
