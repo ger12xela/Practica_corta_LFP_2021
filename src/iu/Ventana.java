@@ -6,12 +6,17 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import funcion.Funcion;
+
 import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
 import javax.swing.JTextArea;
 import java.awt.GridBagConstraints;
 import javax.swing.JButton;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Ventana extends JFrame {
 
@@ -19,6 +24,7 @@ public class Ventana extends JFrame {
 	public JTextArea entrada;
 	public JTextArea salida;
 	public JButton identificar;
+	Funcion funcion = new Funcion();
 
 	/**
 	 * Create the frame.
@@ -50,6 +56,13 @@ public class Ventana extends JFrame {
 		gbc_identificar.gridx = 0;
 		gbc_identificar.gridy = 1;
 		contentPane.add(identificar, gbc_identificar);
+			identificar.addActionListener(new ActionListener() {
+				
+				public void actionPerformed(ActionEvent e) {
+					salida.setText("");
+					salida.setText(funcion.paso1(entrada.getText()));
+				}
+			});
 		
 		salida = new JTextArea();
 		GridBagConstraints gbc_salida = new GridBagConstraints();

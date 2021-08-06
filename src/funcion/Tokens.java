@@ -4,7 +4,8 @@ public enum Tokens {
 	entero("entero"),
 	identificador("identificador"),
 	decimal ("Decimal"),
-	simbolo ("Simbolo");
+	simbolo ("Simbolo"),
+	error ("Error");
 	
 	String forma;
 

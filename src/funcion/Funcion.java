@@ -9,18 +9,31 @@ public class Funcion {
 	String numeros = "1234567890";
 	String simbolos = "[]{};,";
 	String lexema = " ";
-	Tokens entero = Tokens.entero;
-	Tokens simbolo = Tokens.simbolo;		
-	
-	public void paso1(String entrada) {
+	boolean perteneceL;
+	/**
+	 * recibe el texto y lo separa en caracteres
+	 * @param entrada
+	 * @return
+	 */
+	public String paso1(String entrada) {
 		this.entrada = entrada;
 		
+		perteneceL = false;
 		
 		for (int i = 0; i < entrada.length(); i++) {
 			char token = entrada.charAt(i);
 			
+			if (token == ' ') {
+				perteneceL = true;
+				lexema = "";
+				tipo = null;
+			}
+
+			//compara con las letras
 			for (int j = 0; j <letras.length() ; j++) {
 				if (token == letras.charAt(j)){
+					perteneceL = true;
+
 					if(i == 0) {
 						tipo=Tokens.identificador;
 						lexema = "";
@@ -33,20 +46,70 @@ public class Funcion {
 						tipo =Tokens.identificador;
 						lexema += token;
 					}
+					if(tipo == Tokens.entero) {
+						lexema += token;
+						tipo = Tokens.error;
+					}
 				}
 			}
-			System.out.println(lexema +"----->"+ tipo.getTipo());
-			
-			if (token == ' ') {
-				lexema = "";
+			//compara con los numeros
+			for (int j = 0; j < numeros.length(); j++) {
+				
+				if (token == numeros.charAt(j)){
+					perteneceL = true;
+
+					if(i == 0) {
+						tipo=Tokens.entero;
+						lexema = "";
+					}
+					if(i>0 &&' ' == entrada.charAt(i-1)) {
+						tipo = Tokens.entero;
+						lexema="";
+					}
+					if(tipo == Tokens.identificador) {
+						tipo =Tokens.identificador;
+						lexema += token;
+					}
+					if(tipo == Tokens.entero) {
+						tipo = Tokens.entero;
+						lexema += token;
+					}
+					if (tipo == Tokens.error) {
+						tipo = Tokens.entero;
+						lexema +=token;
+					}
+					if (tipo == Tokens.simbolo) {
+						tipo = Tokens.entero;
+						lexema = Character.toString(token);
+					}
+				}
+				
 			}
+			//compara con los simbolos 
 			for (int j = 0; j < simbolos.length(); j++) {
 				if (token == simbolos.charAt(j)) {
-					lexema = Character.toString(token);
-					System.out.println(lexema +"------->"+ simbolo.getTipo());
-					lexema = "";
+					perteneceL = true;
+
+					tipo=Tokens.simbolo;
+					lexema= "";
+					lexema= Character.toString(token);
 				}
 			}
+			
+			if (perteneceL == false) {
+				
+				tipo = Tokens.error;
+				System.out.println("no pertenece al lenguaje");
+			}
+				
+			if (tipo != null) {
+				System.out.println(lexema + "----->" + tipo.getTipo());
+				String temporal = lexema + "----->" + tipo.getTipo();
+				salida += (temporal + "\n") ;
+			}
+			
 		}
+		return salida;
+		
 	}
 }
